@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Box Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Click the Box Game</h1>
+<p>Score: <span id="score">0</span></p>
+
+<!-- AUTH -->
+<div id="auth">
+    <h2>Bejelentkezés</h2>
+    <input id="loginUsername" placeholder="Felhasználónév"><br>
+    <input id="loginPassword" placeholder="Jelszó" type="password"><br>
+    <button id="loginBtn">Bejelentkezés</button>
+
+    <h2>Regisztráció</h2>
+    <input id="regUsername" placeholder="Új felhasználónév"><br>
+    <input id="regPassword" placeholder="Új jelszó" type="password"><br>
+    <button id="registerBtn">Regisztráció</button>
+</div>
+
+<!-- Logged in info -->
+<div id="userPanel" style="display:none">
+    <h2>Üdv, <span id="userDisplay"></span></h2>
+    <button id="logoutBtn">Kijelentkezés</button>
+</div>
+
+<!-- Top menu -->
+<div id="top-menu" style="display:none;">
+    <button class="tab-btn" data-target="game-section">Game</button>
+    <button class="tab-btn" data-target="leaderboard-section">Leaderboard</button>
+    <button class="tab-btn" data-target="upgrades-section">Upgrades</button>
+</div>
+
+<!-- Game -->
+<div id="game-section" class="tab-section" style="display:none;">
+    <div id="game-area">
+        <div id="box"></div>
+    </div>
+</div>
+
+<!-- Leaderboard -->
+<div id="leaderboard-section" class="tab-section" style="display:none;">
+    <h2>Leaderboard</h2>
+    <ol id="leaderboard"></ol>
+    <button id="reset-leaderboard">Reset Leaderboard</button>
+</div>
+
+<div id="upgrades-section" class="tab-section" style="display:none;">
+    <button id="upgrade-btn">Upgrade: Bigger Box (Cost: 10)</button>
+    <button id="double-upgrade">Upgrade: Double Click (Cost: 40)</button>
+    <button id="max-size-btn">Upgrade: Max box size (Cost: 150)</button>
+
+    <!-- Chain upgrade csak itt -->
+    <div class="chain-upgrade-box">
+        <h3>Chain Upgrade</h3>
+        <p>Szint: <span id="chain-level">0</span></p>
+        <p>Következő upgrade ára: <span id="chain-cost">20</span></p>
+        <p>Extra click power: <span id="chain-power">0</span></p>
+        <button id="chain-upgrade-btn">Chain Upgrade</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
