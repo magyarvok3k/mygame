@@ -15,15 +15,19 @@ body {
 }
 
 #box {
-    width: 50px;
-    height: 50px;
-    background-color: red;
+    width: 60px;
+    height: 60px;
+    background-color: red;          /* vagy bármilyen szín */
+    background-size: cover;         /* IDE kell a cover */
+    background-position: center;
+    background-repeat: no-repeat;
     position: absolute;
     top: 0;
     left: 0;
     cursor: pointer;
     transition: 0.1s;
 }
+
 
 #top-menu {
     display: flex ;
