@@ -1,6 +1,4 @@
-//------------------------------------------
 // USER SYSTEM (login / register)
-//------------------------------------------
 
 function loadUsers() {
     return JSON.parse(localStorage.getItem("users")) || [];
@@ -26,9 +24,7 @@ function updateUserData(updatedUser) {
     saveUsers(users);
 }
 
-//------------------------------------------
 // REGISTER
-//------------------------------------------
 
 document.getElementById("registerBtn").onclick = () => {
     const username = document.getElementById("regUsername").value;
@@ -49,7 +45,7 @@ document.getElementById("registerBtn").onclick = () => {
         upgrades: {
             bigBox: false,
             doubleClick: false,
-            chainUpgrade: 0 // chain upgrade szint
+            chainUpgrade: 0 
         }
     });
 
@@ -57,9 +53,8 @@ document.getElementById("registerBtn").onclick = () => {
     alert("Sikeres regisztráció!");
 };
 
-//------------------------------------------
 // LOGIN
-//------------------------------------------
+
 
 document.getElementById("loginBtn").onclick = () => {
     const username = document.getElementById("loginUsername").value;
@@ -75,18 +70,14 @@ document.getElementById("loginBtn").onclick = () => {
     showGameUI();
 };
 
-//------------------------------------------
 // LOGOUT
-//------------------------------------------
 
 document.getElementById("logoutBtn").onclick = () => {
     localStorage.removeItem("loggedInUser");
     showLoginUI();
 };
 
-//------------------------------------------
 // LOAD PLAYER DATA INTO GAME
-//------------------------------------------
 
 let score = 0;
 let clickValue = 1;
@@ -101,7 +92,6 @@ function loadPlayer(player) {
     doubleUpgradeBought = player.upgrades.doubleClick;
     chainUpgradeLevel = player.upgrades.chainUpgrade || 0;
 
-    // Box méret
     if (upgradeBought) {
         document.getElementById("box").style.width = "80px";
         document.getElementById("box").style.height = "80px";
@@ -113,8 +103,8 @@ function loadPlayer(player) {
     }
 
     if (maxsizebtn) {
-        document.getElementById("box").style.width = "160px";
-        document.getElementById("box").style.height = "160px";
+        document.getElementById("box").style.width = "140px";
+        document.getElementById("box").style.height = "140px";
         document.getElementById("max-size-btn").innerText = "Max Size Purchased!";
     }
 
@@ -122,9 +112,7 @@ function loadPlayer(player) {
     document.getElementById("score").innerText = score;
 }
 
-//------------------------------------------
 // SAVE PLAYER DATA
-//------------------------------------------
 
 function savePlayer() {
     let username = getLoggedInUser();
@@ -140,9 +128,7 @@ function savePlayer() {
     updateUserData(user);
 }
 
-//------------------------------------------
 // GAME SYSTEM
-//------------------------------------------
 
 const box = document.getElementById("box");
 const scoredisplay = document.getElementById("score");
@@ -151,14 +137,14 @@ const gameArea = document.getElementById("game-area");
 box.addEventListener("click", () => {
     if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
 
-    score += clickValue + chainUpgradeLevel; // chain upgrade ad hozzá extra click-et
+    score += clickValue + chainUpgradeLevel;
     scoredisplay.innerText = score;
     savePlayer();
     movebox();
 });
 
 function movebox() {
-if( cubeFrozen) return; // Ha freeze alatt van, ne mozogjon
+if( cubeFrozen) return; 
 
     const areaWidth = gameArea.clientWidth - box.clientWidth;
     const areaHeight = gameArea.clientHeight - box.clientHeight;
@@ -170,9 +156,7 @@ if( cubeFrozen) return; // Ha freeze alatt van, ne mozogjon
     box.style.top = randomY + "px";
 }
 
-//------------------------------------------
 // UPGRADES
-//------------------------------------------
 
 const upgradeBtn = document.getElementById("upgrade-btn");
 upgradeBtn.addEventListener("click", () => {
@@ -309,24 +293,36 @@ tabButtons.forEach(btn => {
         btn.classList.add("active");
 
         hideAllTabs();
-        document.getElementById(btn.dataset.target).style.display = "block";
+        const target = document.getElementById(btn.dataset.target);
+        target.style.display = "block";
+
+        // Csak a game section-nél jelenítjük a skin és powerup-et
+        const skinSelect = document.getElementById("skin-select");
+        const powerUpSection = document.getElementById("powerup-section");
+
+        if (btn.dataset.target === "game-section") {
+            skinSelect.style.display = "block";
+            powerUpSection.style.display = "block";
+        } else {
+            skinSelect.style.display = "none";
+            powerUpSection.style.display = "none";
+        }
     });
 });
+
 
 function hideAllTabs() {
     tabSections.forEach(sec => sec.style.display = "none");
 }
 
 let cubeFrozen = false;
-const freezeDuration = 10000; // 10 másodperc
+const freezeDuration = 10000; // 10 sec
 const powerUpCost = 1000;
 
 const cube = document.getElementById("box");
 const powerUpBtn = document.getElementById("power-up-btn");
 
-// Cube click
 cube.addEventListener("click", () => {
-    // mindig ad pontot, még freeze alatt is
     score += clickValue + chainUpgradeLevel;
     scoredisplay.innerText = score;
 });
@@ -362,3 +358,32 @@ function activateFreeze() {
     }, freezeDuration);
 }
 
+// skin for cube 
+
+const skinSelect = document.getElementById("skin-select");
+
+skinSelect.addEventListener("change", () => {
+    const selectedSkin = skinSelect.value;
+    box.style.backgroundImage = `url("skins/lava.png")`;
+});
+
+const skinBonus = {
+    "red": 1,
+    "lava": 3
+};
+
+box.addEventListener("click", () => {
+    if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
+
+    let points = clickValue + chainUpgradeLevel; 
+    const currentSkin = skinSelect.value;
+
+    if (currentSkin === "lava") {
+        points *= 2;
+    }
+
+    score += points;
+    scoredisplay.innerText = score;
+    savePlayer();
+    movebox();
+});
