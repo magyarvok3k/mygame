@@ -158,6 +158,8 @@ box.addEventListener("click", () => {
 });
 
 function movebox() {
+if( cubeFrozen) return; // Ha freeze alatt van, ne mozogjon
+
     const areaWidth = gameArea.clientWidth - box.clientWidth;
     const areaHeight = gameArea.clientHeight - box.clientHeight;
 
@@ -265,6 +267,7 @@ function showLoginUI() {
     document.getElementById("auth").style.display = "block";
     document.getElementById("userPanel").style.display = "none";
     document.getElementById("top-menu").style.display = "none";
+    document.getElementById("powerup-section").style.display = "block";
     hideAllTabs();
 }
 
@@ -275,6 +278,9 @@ function showGameUI() {
     document.getElementById("auth").style.display = "none";
     document.getElementById("userPanel").style.display = "block";
     document.getElementById("top-menu").style.display = "block";
+
+    // SHOW POWER-UP SECTION
+    document.getElementById("powerup-section").style.display = "block";
 
     tabButtons[0].click();
 }
@@ -311,14 +317,48 @@ function hideAllTabs() {
     tabSections.forEach(sec => sec.style.display = "none");
 }
 
-box.addEventListener("click", () => {
-    if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
+let cubeFrozen = false;
+const freezeDuration = 10000; // 10 másodperc
+const powerUpCost = 1000;
 
-    // Chain upgrade hozzáad extra pontot
+const cube = document.getElementById("box");
+const powerUpBtn = document.getElementById("power-up-btn");
 
+// Cube click
+cube.addEventListener("click", () => {
+    // mindig ad pontot, még freeze alatt is
     score += clickValue + chainUpgradeLevel;
     scoredisplay.innerText = score;
-    savePlayer();
-    movebox();
 });
+
+powerUpBtn.addEventListener("click", () => {
+    if (cubeFrozen) return;
+
+    if (score < powerUpCost) {
+        alert("Nincs elég pontod a power up-hoz!");
+        return;
+    }
+
+    score -= powerUpCost;
+    scoredisplay.innerText = score;
+
+    activateFreeze();
+});
+
+function activateFreeze() {
+    cubeFrozen = true;
+    powerUpBtn.disabled = true;
+    powerUpBtn.textContent = "Power-Up Active!";
+
+    cube.classList.add("frozen");
+
+    setTimeout(() => {
+        cubeFrozen = false;
+
+        cube.classList.remove("frozen");
+        powerUpBtn.disabled = false;
+        powerUpBtn.textContent =
+            "Power up: Freeze the cube for 10 seconds (Cost: 1000)";
+    }, freezeDuration);
+}
 
