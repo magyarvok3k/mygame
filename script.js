@@ -45,7 +45,7 @@ document.getElementById("registerBtn").onclick = () => {
         upgrades: {
             bigBox: false,
             doubleClick: false,
-            chainUpgrade: 0 
+            chainUpgrade: 0
         }
     });
 
@@ -84,6 +84,7 @@ let clickValue = 1;
 let upgradeBought = false;
 let doubleUpgradeBought = false;
 let chainUpgradeLevel = 0;
+let 
 
 function loadPlayer(player) {
     score = player.score;
@@ -387,3 +388,4 @@ box.addEventListener("click", () => {
     savePlayer();
     movebox();
 });
+
