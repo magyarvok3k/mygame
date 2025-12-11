@@ -99,10 +99,9 @@ function loadPlayer(player) {
         const box = document.getElementById("box");
         box.style.width = "80px";
         box.style.height = "80px";
-
         document.getElementById("upgrade-btn").innerText = "Upgrade Purchased!";
     }
-    
+
     if (doubleUpgradeBought) {
         document.getElementById("double-upgrade").innerText = "Double Click Purchased!";
     }
@@ -111,12 +110,10 @@ function loadPlayer(player) {
         const box = document.getElementById("box");
         box.style.width = "140px";
         box.style.height = "140px";
-
         document.getElementById("max-size-btn").innerText = "Max Size Purchased!";
     }
 
     updateChainUI();
-
     document.getElementById("score").innerText = score;
 }
 
@@ -395,5 +392,6 @@ box.addEventListener("click", () => {
     savePlayer();
     movebox();
 });
+
 
 
