@@ -92,3 +92,10 @@ body {
     background-color: #00ffff !important;
     box-shadow: 0 0 15px #4fc3f7;
 }
+
+.skin-selectore {
+    margin-bottom: 10px;
+    background-color: #blue;
+    cursor: pointer;
+    padding: 10px;
+}
