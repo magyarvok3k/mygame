@@ -81,35 +81,42 @@ document.getElementById("logoutBtn").onclick = () => {
 
 let score = 0;
 let clickValue = 1;
-let upgradeBought = false;
-let doubleUpgradeBought = false;
+let upgradeBought = false;         
+let doubleUpgradeBought = false;    
 let chainUpgradeLevel = 0;
-let 
+let maxSizeBought = false;          
 
 function loadPlayer(player) {
-    score = player.score;
-    clickValue = player.upgrades.doubleClick ? 2 : 1;
-    upgradeBought = player.upgrades.bigBox;
-    doubleUpgradeBought = player.upgrades.doubleClick;
+    score = player.score || 0;
+    upgradeBought = !!player.upgrades.bigBox;
+    doubleUpgradeBought = !!player.upgrades.doubleClick;
     chainUpgradeLevel = player.upgrades.chainUpgrade || 0;
+    maxSizeBought = !!player.upgrades.maxSize;
+
+    clickValue = doubleUpgradeBought ? 2 : 1;
 
     if (upgradeBought) {
-        document.getElementById("box").style.width = "80px";
-        document.getElementById("box").style.height = "80px";
+        const box = document.getElementById("box");
+        box.style.width = "80px";
+        box.style.height = "80px";
+
         document.getElementById("upgrade-btn").innerText = "Upgrade Purchased!";
     }
-
+    
     if (doubleUpgradeBought) {
         document.getElementById("double-upgrade").innerText = "Double Click Purchased!";
     }
 
-    if (maxsizebtn) {
-        document.getElementById("box").style.width = "140px";
-        document.getElementById("box").style.height = "140px";
+    if (maxSizeBought) {
+        const box = document.getElementById("box");
+        box.style.width = "140px";
+        box.style.height = "140px";
+
         document.getElementById("max-size-btn").innerText = "Max Size Purchased!";
     }
 
     updateChainUI();
+
     document.getElementById("score").innerText = score;
 }
 
@@ -388,4 +395,5 @@ box.addEventListener("click", () => {
     savePlayer();
     movebox();
 });
+
 
