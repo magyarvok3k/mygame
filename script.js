@@ -142,7 +142,14 @@ const gameArea = document.getElementById("game-area");
 box.addEventListener("click", () => {
     if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
 
-    score += clickValue + chainUpgradeLevel;
+    let points = clickValue + chainUpgradeLevel; 
+    const currentSkin = skinSelect.value;
+
+    if (currentSkin === "lava") {
+        points *= 2;
+    }
+
+    score += points;
     scoredisplay.innerText = score;
     savePlayer();
     movebox();
@@ -327,11 +334,6 @@ const powerUpCost = 1000;
 const cube = document.getElementById("box");
 const powerUpBtn = document.getElementById("power-up-btn");
 
-cube.addEventListener("click", () => {
-    score += clickValue + chainUpgradeLevel;
-    scoredisplay.innerText = score;
-});
-
 powerUpBtn.addEventListener("click", () => {
     if (cubeFrozen) return;
 
@@ -392,6 +394,7 @@ box.addEventListener("click", () => {
     savePlayer();
     movebox();
 });
+
 
 
 
