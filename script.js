@@ -30,12 +30,12 @@ document.getElementById("registerBtn").onclick = () => {
     const username = document.getElementById("regUsername").value;
     const password = document.getElementById("regPassword").value;
 
-    if (!username || !password) return alert("Tölts ki mindent!");
+    if (!username || !password) return alert("Fill out everything!");
 
     let users = loadUsers();
 
     if (users.some(u => u.username === username)) {
-        return alert("Ez a név már foglalt!");
+        return alert("This user is already taken!");
     }
 
     users.push({
@@ -63,7 +63,7 @@ document.getElementById("loginBtn").onclick = () => {
     let users = loadUsers();
     let found = users.find(u => u.username === username && u.password === password);
 
-    if (!found) return alert("Hibás adatok!");
+    if (!found) return alert("Wrong name/passworld!");
 
     localStorage.setItem("loggedInUser", username);
     loadPlayer(found);
@@ -140,7 +140,7 @@ const scoredisplay = document.getElementById("score");
 const gameArea = document.getElementById("game-area");
 
 box.addEventListener("click", () => {
-    if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
+    if (!getLoggedInUser()) return alert("Log in first!");
 
     let points = clickValue + chainUpgradeLevel; 
     const currentSkin = skinSelect.value;
@@ -242,7 +242,7 @@ if (chainUpgradeBtn) {
             savePlayer();
             scoredisplay.innerText = score;
         } else {
-            alert("Nincs elég pontod a chain upgrade-hez!");
+            alert("Don't have the money for this!");
         }
     });
 }
@@ -338,7 +338,7 @@ powerUpBtn.addEventListener("click", () => {
     if (cubeFrozen) return;
 
     if (score < powerUpCost) {
-        alert("Nincs elég pontod a power up-hoz!");
+        alert("Don't have the money for this!");
         return;
     }
 
@@ -380,7 +380,7 @@ const skinBonus = {
 };
 
 box.addEventListener("click", () => {
-    if (!getLoggedInUser()) return alert("Be kell jelentkezned!");
+    if (!getLoggedInUser()) return alert("Log in first!");
 
     let points = clickValue + chainUpgradeLevel; 
     const currentSkin = skinSelect.value;
@@ -394,6 +394,7 @@ box.addEventListener("click", () => {
     savePlayer();
     movebox();
 });
+
 
 
 
